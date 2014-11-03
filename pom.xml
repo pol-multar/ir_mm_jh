@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.unice.polytech.si4.ir</groupId>
-  <artifactId>mm_jh.str</artifactId>
+  <artifactId>ir_mm_jh</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>mm_jh.str</name>
+  <name>ir_mm_jh</name>
   <url>http://maven.apache.org</url>
 
   <properties>
