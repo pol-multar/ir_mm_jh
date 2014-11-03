@@ -17,3 +17,6 @@ hs_err_pid*
 .idea/
 
 .metadata/
+.classpath
+.project
+.settings/
