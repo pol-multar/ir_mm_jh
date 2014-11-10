@@ -49,6 +49,8 @@ public class ServerEcho {
     }
 
     public void launchServer(int nb){
+
+        System.out.println("Lancement du server echo ...");
         try{
             echoServer=new ServerSocket(nb);
         }

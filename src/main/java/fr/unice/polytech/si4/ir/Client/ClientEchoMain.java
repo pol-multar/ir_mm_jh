@@ -8,8 +8,14 @@ import java.net.Socket;
  * Created by Max on 10/11/2014.
  */
 public class ClientEchoMain {
-    Socket echoSocket=null;
-    DataOutputStream os=null;
-    DataInputStream is=null;
+
+    public static void main(String args[]) {
+    ClientEcho clientEcho=new ClientEcho();
+
+        clientEcho.launchClient("localhost",999);
+
+
+    }
+
 
 }
