@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
  */
 public class ClientEcho {
 
-    Socket echoSocket;
+    private Socket echoSocket;
     DataOutputStream os;
     DataInputStream is;
 
