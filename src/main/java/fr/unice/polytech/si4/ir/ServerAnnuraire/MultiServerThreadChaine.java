@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.Server;
+package fr.unice.polytech.si4.ir.ServerAnnuraire;
 
 import java.net.Socket;
 

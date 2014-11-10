@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.Client;
+package fr.unice.polytech.si4.ir.clientEcho;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

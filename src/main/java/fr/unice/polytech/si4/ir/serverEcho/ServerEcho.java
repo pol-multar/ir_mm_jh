@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.Server;
+package fr.unice.polytech.si4.ir.serverEcho;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -15,10 +15,11 @@ import java.net.Socket;
  */
 public class ServerEcho {
     ServerSocket echoServer;
+    Socket clientSocket;
     String line;
     DataInputStream is;
     PrintStream os;
-    Socket clientSocket;
+
 
     public ServerEcho(){
         echoServer=null;

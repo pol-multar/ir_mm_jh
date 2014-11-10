@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.Server;
+package fr.unice.polytech.si4.ir.serverEcho;
 
 /**
  * Created by Max on 10/11/2014.
