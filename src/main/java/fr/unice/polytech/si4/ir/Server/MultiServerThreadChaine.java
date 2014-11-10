@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir;
+package fr.unice.polytech.si4.ir.Server;
 
 import java.net.Socket;
 
