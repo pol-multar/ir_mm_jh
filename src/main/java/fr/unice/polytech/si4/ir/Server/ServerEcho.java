@@ -1,6 +1,7 @@
 package fr.unice.polytech.si4.ir.Server;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -46,4 +47,28 @@ public class ServerEcho {
     public void setClientSocket(Socket socket){
         clientSocket=clientSocket;
     }
+
+    public void launchServer(){
+        try{
+            echoServer=new ServerSocket(9999);
+        }
+        catch (IOException e){
+            System.out.println("Impossible d'ouvrir le port, erreur : " + e);
+        }
+
+        try{
+            clientSocket=echoServer.accept();
+            is=new DataInputStream(clientSocket.getInputStream());
+            os=new PrintStream(clientSocket.getOutputStream());
+            while(true){
+                line=is.readLine();
+                os.println(line);
+            }
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
+
+    }
+
 }
