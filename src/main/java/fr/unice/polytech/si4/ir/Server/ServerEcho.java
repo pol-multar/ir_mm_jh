@@ -45,12 +45,12 @@ public class ServerEcho {
     }
 
     public void setClientSocket(Socket socket){
-        clientSocket=clientSocket;
+        clientSocket=socket;
     }
 
-    public void launchServer(){
+    public void launchServer(int nb){
         try{
-            echoServer=new ServerSocket(9999);
+            echoServer=new ServerSocket(nb);
         }
         catch (IOException e){
             System.out.println("Impossible d'ouvrir le port, erreur : " + e);
