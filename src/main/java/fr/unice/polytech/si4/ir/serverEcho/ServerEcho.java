@@ -60,6 +60,23 @@ public class ServerEcho {
         }
 
         try{
+        	
+/*        	server=new Socket("localhost",9999);
+        	in=new BufferedReader(new InputStreamReader(server.getInputStream()));
+        	out=new PrintWriter(server.getOutputStream(),true);
+        	System.out.println(in.readLine());
+
+        	                BufferedReader stIn=new BufferedReader(new InputStreamReader(System.in));
+        	                String userInput;
+        	                while((userInput=stIn.readLine())!=null){
+        	                        out.println(userInput);
+        	                        System.out.println(userInput);
+        	}*/
+        	
+        	
+        	
+        	
+        	
             clientSocket=echoServer.accept();
             is=new DataInputStream(clientSocket.getInputStream());
             os=new PrintStream(clientSocket.getOutputStream());
