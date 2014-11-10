@@ -65,7 +65,14 @@ public class ServerEcho {
             while(true){
                 line=is.readLine();
                 os.println(line);
+                if(line.equals("OK")){
+                    System.out.println("J'ai reçu ok, Je ferme la connection");
+                    break;
+                }
             }
+            os.close();
+            is.close();
+            clientSocket.close();
         }
         catch(IOException e){
             System.out.println(e);

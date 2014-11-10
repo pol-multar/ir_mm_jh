@@ -37,18 +37,25 @@ public class ClientEcho {
             try {
                 os.writeBytes("Coucou serveur\n");
                 os.writeBytes("J'attend ta réponse\n");
+                os.writeBytes("OK\n");
 
                 //attente de la réponse du serveur
 
                 String responseLine;
                 while((responseLine=is.readLine())!=null){
                     System.out.println("Serveur : "+responseLine);
+                    if(responseLine.indexOf("OK")!=-1){
+                        System.out.println("J'ai reçu le OK du serveur");
+                        break;
+                    }
                 }
                 os.close();
                 is.close();
+                echoSocket.close();
             }
             catch (UnknownHostException e){
                 System.err.println("Trying to connect to unknown host "+e);
+
             }
             catch (IOException e){
                 System.err.println("IOException : "+e);
