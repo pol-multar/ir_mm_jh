@@ -1,8 +1,6 @@
 package fr.unice.polytech.si4.ir.ServerAnnuraire;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -11,7 +9,7 @@ public class ServeurAnnuaire {
     private ServerSocket annuaireServeurSocket;
     private Socket clientSocket;
     private String line;
-    private DataInputStream is;
+    private BufferedReader is;
     private PrintStream os;
 
 
@@ -34,7 +32,7 @@ public class ServeurAnnuaire {
 
         try{
             clientSocket=annuaireServeurSocket.accept();
-            is=new DataInputStream(clientSocket.getInputStream());
+            is=new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             os=new PrintStream(clientSocket.getOutputStream());
             while(true){
                 line=is.readLine();
