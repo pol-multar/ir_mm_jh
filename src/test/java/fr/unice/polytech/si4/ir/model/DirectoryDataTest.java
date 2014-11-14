@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.Modele;
+package fr.unice.polytech.si4.ir.model;
 
 import org.junit.After;
 import org.junit.Before;

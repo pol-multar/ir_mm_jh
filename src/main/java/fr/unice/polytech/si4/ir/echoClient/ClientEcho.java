@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.clientAnnuaire;
+package fr.unice.polytech.si4.ir.echoClient;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,12 +9,13 @@ import java.net.UnknownHostException;
 /**
  * Created by Max on 10/11/2014.
  */
-public class ClientAnnuaire {
+public class ClientEcho {
+
     private Socket echoSocket;
     private DataOutputStream os;
     private DataInputStream is;
 
-    public ClientAnnuaire() {
+    public ClientEcho() {
         echoSocket = null;
         os = null;
         is = null;

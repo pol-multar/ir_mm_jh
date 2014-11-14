@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.Modele;
+package fr.unice.polytech.si4.ir.model;
 
 import java.util.ArrayList;
 import java.util.Enumeration;

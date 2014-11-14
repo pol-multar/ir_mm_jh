@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.ServerAnnuraire;
+package fr.unice.polytech.si4.ir.directoryServer;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -40,6 +40,16 @@ public class ServeurAnnuaire {
                 if(line.equals("OK")){
                     System.out.println("J'ai reçu ok, Je ferme la connection");
                     break;
+                }
+
+                String[] s=line.split(";");
+
+                if("AD".equals(s[0])){
+                    System.out.println("Tu veux ajouter le nom "+s[1]);
+                }
+
+                if("PRINTSNAME".equals(s[0])){
+                    System.out.println("Tu veux afficher les surnoms associés à : "+s[1]);
                 }
             }
             os.close();

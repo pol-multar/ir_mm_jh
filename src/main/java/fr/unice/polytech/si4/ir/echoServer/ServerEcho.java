@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.serverEcho;
+package fr.unice.polytech.si4.ir.echoServer;
 
 import java.io.DataInputStream;
 import java.io.IOException;

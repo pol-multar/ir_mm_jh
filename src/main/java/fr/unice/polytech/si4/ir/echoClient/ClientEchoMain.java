@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.clientEcho;
+package fr.unice.polytech.si4.ir.echoClient;
 
 /**
  * Created by Max on 10/11/2014.
