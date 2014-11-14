@@ -11,12 +11,12 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author mmultari on 13/11/14.
  */
-public class DonneesAnnuaireTest {
+public class DirectoryDataTest {
 
-    private DonneesAnnuaire donneesAnnuaireTest;
+    private DirectoryData directoryDataTest;
 
 
-    public DonneesAnnuaireTest(){
+    public DirectoryDataTest(){
 
     }
 
@@ -26,7 +26,7 @@ public class DonneesAnnuaireTest {
 
     @Before
     public void setUp(){
-        donneesAnnuaireTest=new DonneesAnnuaire();
+        directoryDataTest =new DirectoryData();
 
     }
 
@@ -36,7 +36,7 @@ public class DonneesAnnuaireTest {
 
     @After
     public void tearDown(){
-    donneesAnnuaireTest=null;
+    directoryDataTest =null;
     }
 
     /**
@@ -44,13 +44,13 @@ public class DonneesAnnuaireTest {
      */
     @Test
     public void ajoutEtRecup(){
-        donneesAnnuaireTest.addEntry("toto","riri");
-        donneesAnnuaireTest.addEntry("toto","fifi");
-        donneesAnnuaireTest.addEntry("toto","loulou");
-        donneesAnnuaireTest.addEntry("tata","lala");
-        donneesAnnuaireTest.addEntry("tata","riri");
+        directoryDataTest.addEntry("toto","riri");
+        directoryDataTest.addEntry("toto","fifi");
+        directoryDataTest.addEntry("toto","loulou");
+        directoryDataTest.addEntry("tata","lala");
+        directoryDataTest.addEntry("tata","riri");
         ArrayList<String> al=new ArrayList<>();
-        al=donneesAnnuaireTest.getSurn("toto");
+        al= directoryDataTest.getNick("toto");
         assertEquals(3,al.size());
     }
 
