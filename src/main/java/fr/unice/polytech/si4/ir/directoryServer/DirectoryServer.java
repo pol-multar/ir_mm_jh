@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServeurAnnuaire {
+public class DirectoryServer {
 
     private ServerSocket annuaireServeurSocket;
     private Socket clientSocket;
@@ -13,7 +13,7 @@ public class ServeurAnnuaire {
     private PrintStream os;
 
 
-    public ServeurAnnuaire(){
+    public DirectoryServer(){
         annuaireServeurSocket=null;
         clientSocket=null;
         line=null;

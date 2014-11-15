@@ -1,4 +1,4 @@
-package fr.unice.polytech.si4.ir.echoClient;
+package fr.unice.polytech.si4.ir.directoryClient;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,13 +9,12 @@ import java.net.UnknownHostException;
 /**
  * Created by Max on 10/11/2014.
  */
-public class ClientEcho {
-
+public class DirectoryClient {
     private Socket echoSocket;
     private DataOutputStream os;
     private DataInputStream is;
 
-    public ClientEcho() {
+    public DirectoryClient() {
         echoSocket = null;
         os = null;
         is = null;

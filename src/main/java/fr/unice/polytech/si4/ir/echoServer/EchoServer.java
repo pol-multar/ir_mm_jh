@@ -13,7 +13,7 @@ import java.net.Socket;
  * Reçoit un texte du client et le renvoie identique
  * Le serveur gère un seul client
  */
-public class ServerEcho {
+public class EchoServer {
     private ServerSocket echoServer;
     private Socket clientSocket;
     private String line;
@@ -21,7 +21,7 @@ public class ServerEcho {
     private PrintStream os;
 
 
-    public ServerEcho(){
+    public EchoServer(){
         echoServer=null;
         line=null;
         is=null;
