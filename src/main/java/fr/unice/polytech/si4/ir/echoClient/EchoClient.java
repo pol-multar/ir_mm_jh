@@ -28,9 +28,9 @@ public class EchoClient {
             os= new DataOutputStream(echoSocket.getOutputStream());
             is= new DataInputStream(echoSocket.getInputStream());
         }catch(UnknownHostException e){
-            System.err.println("Je ne connais pas : "+nameHost);
+            System.err.println("Client : Je ne connais pas : "+nameHost);
         }catch (IOException e){
-            System.err.println("Ne peux pas I/O pour la connection : "+nameHost);
+            System.err.println("Client : Ne peux pas I/O pour la connection : "+nameHost);
         }
 
         if(echoSocket!=null && os!=null && is !=null){
@@ -43,9 +43,9 @@ public class EchoClient {
 
                 String responseLine;
                 while((responseLine=is.readLine())!=null){
-                    System.out.println("Serveur : "+responseLine);
+                    System.out.println("Client : Réponse du serveur : "+responseLine);
                     if(responseLine.indexOf("OK")!=-1){
-                        System.out.println("J'ai reçu le OK du serveur");
+                        System.out.println("Client : J'ai reçu le OK du serveur");
                         break;
                     }
                 }
@@ -54,7 +54,7 @@ public class EchoClient {
                 echoSocket.close();
             }
             catch (UnknownHostException e){
-                System.err.println("Trying to connect to unknown host "+e);
+                System.err.println("Client : Trying to connect to unknown host "+e);
 
             }
             catch (IOException e){
