@@ -23,13 +23,15 @@ public class DirectoryData {
      * The method to add a name and its nicknames to the directory
      * @param name the name to add
      * @param nickname one nickname associated
+     * @return true if the name has been added
      */
-    public void addEntry(String name, String nickname){
+    public Boolean addEntry(String name, String nickname){
         if(!directory.containsKey(nickname)){
             directory.put(nickname,name);
+            return true;
         }else{
-            //TODO a renvoyer au client
             System.err.println("Nickname already taken");
+            return false;
         }
     }
 

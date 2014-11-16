@@ -17,6 +17,7 @@ public class DirectoryServer {
     private PrintStream os;
     private Boolean interOut;
     private DirectoryData directoryData;
+    private Boolean verbose;
 
     /**
      * Default constructor for the directory server
@@ -29,19 +30,21 @@ public class DirectoryServer {
         os = null;
         interOut = true;
         directoryData = new DirectoryData();
+        verbose=true;
     }
 
     /**
      * The main method of the server
      * Open network stream and execute main loop
+     *
      * @param nbPort the sever port
      */
     public void launchServer(int nbPort) {
-        System.out.println("Server : Lancement du serveur de l'annuaire");
+        printInfo("Lancement du serveur de l'annuaire");
         try {
             annuaireServeurSocket = new ServerSocket(nbPort);
         } catch (IOException e) {
-            System.out.println("Server : Impossible d'ouvrir le port, erreur : " + e);
+            printErr("Impossible d'ouvrir le port, erreur : " + e.toString());
         }
 
         try {
@@ -50,7 +53,7 @@ public class DirectoryServer {
             os = new PrintStream(clientSocket.getOutputStream());
             while (interOut) {
                 line = is.readLine();
-                interOut = interpretor(line, is, os);
+                interOut = interpretor(line);
             }
             os.close();
             is.close();
@@ -64,28 +67,27 @@ public class DirectoryServer {
      * Method who execute action according to the client request
      *
      * @param line the client request
-     * @param is   the input stream from the client
-     * @param os   the output stream to the client
      * @return while condition
      */
-    private boolean interpretor(String line, BufferedReader is, PrintStream os) {
+    private boolean interpretor(String line) {
 
         String[] s = line.split(";");
 
         switch (s[0]) {
             case "OK":
-                System.out.println("Server : J'ai reçu un ok du client, Je ferme la connection");
+                printInfo("J'ai reçu un ok du client, Je ferme la connection");
                 os.println("OK");
                 return false;
             case "AD":
-                System.out.println("Server : Le client veut ajouter le nom : " + s[1]);
+                printInfo("Le client veut ajouter le nom : " + s[1]);
+                addName(s[1]);
                 return true;
             case "PRINTSNAME":
-                System.out.println("Server : Le client veut afficher les surnoms associés à : " + s[1]);
-                printsname(s);
+                printInfo("Le client veut afficher les surnoms associés à : " + s[1]);
+                printsname(s[1]);
                 return true;
             default:
-                System.err.println("Server : Instruction non reconnue : " + s[0]);
+                printErr("Instruction non reconnue : " + s[0]);
                 os.println(line);
                 return true;
         }
@@ -94,36 +96,85 @@ public class DirectoryServer {
     }
 
     /**
+     * Method in charge of adding a name and its nicknames in the directory
+     * @param s the name to add
+     */
+    private void addName(String s) {
+        String name = s;
+
+        try {
+            while(true){
+                line=is.readLine();
+                if("END".equals(line)){
+                    printInfo("Ajout terminé");
+                    break;
+                }
+                printInfo(name+" obtient un nouveau surnom : "+line);
+                directoryData.addEntry(name,line);
+
+            }
+
+        } catch (IOException e) {
+            printErr(e.toString());
+        }
+
+
+    }
+
+    /**
      * Method in charge to print nicknames for a name
      *
-     * @param nameAndN the name to associate
+     * @param name the name to associate
      */
-    private void printsname(String[] nameAndN) {
+    private void printsname(String name) {
 
         ArrayList<String> nickList;
 
-        nickList = this.directoryData.getNick(nameAndN[1]);
+        nickList = this.directoryData.getNick(name);
         if (nickList.size() != 0) {
             ListIterator<String> li = nickList.listIterator();
 
-            osPrinter(nameAndN[1] + " est aussi appelé : ");
+            osPrinter(name + " est aussi appelé : ");
 
             while (li.hasNext()) {
                 osPrinter(li.next());
             }
+            
 
         } else {
-            osPrinter(nameAndN[1] + " n'a pas de surnom ");
+            osPrinter(name + " n'a pas de surnom ");
         }
 
     }
 
     /**
      * Method in charge of printing strings on the Server outputstream
+     *
      * @param s the string to send
      */
     private void osPrinter(String s) {
         os.println(s);
+    }
+
+    /**
+     * Method in charge of displaying messages
+     * @param s
+     */
+    private void printInfo(String s) {
+
+        if (verbose) {
+            System.out.println("Server : "+s);
+        }
+
+    }
+
+    /**
+     * Method in charge of displaying errors
+     *
+     * @param s string to display with the error
+     */
+    private void printErr(String s) {
+        System.err.println("Server : "+s);
     }
 
 }
