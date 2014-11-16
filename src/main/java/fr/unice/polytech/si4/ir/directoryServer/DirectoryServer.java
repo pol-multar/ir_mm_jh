@@ -139,7 +139,7 @@ public class DirectoryServer {
             while (li.hasNext()) {
                 osPrinter(li.next());
             }
-            
+
 
         } else {
             osPrinter(name + " n'a pas de surnom ");
