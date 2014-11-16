@@ -18,7 +18,9 @@ public class DirectoryServer {
     private Boolean interOut;
     private DirectoryData directoryData;
 
-
+    /**
+     * Default constructor for the directory server
+     */
     public DirectoryServer() {
         annuaireServeurSocket = null;
         clientSocket = null;
@@ -35,11 +37,11 @@ public class DirectoryServer {
      * @param nbPort the sever port
      */
     public void launchServer(int nbPort) {
-        System.out.println("Lancement du serveur de l'annuaire");
+        System.out.println("Server : Lancement du serveur de l'annuaire");
         try {
             annuaireServeurSocket = new ServerSocket(nbPort);
         } catch (IOException e) {
-            System.out.println("Impossible d'ouvrir le port, erreur : " + e);
+            System.out.println("Server : Impossible d'ouvrir le port, erreur : " + e);
         }
 
         try {
@@ -100,18 +102,18 @@ public class DirectoryServer {
 
         ArrayList<String> nickList;
 
-        nickList = this.directoryData.getNick(nameAndN[0]);
+        nickList = this.directoryData.getNick(nameAndN[1]);
         if (nickList.size() != 0) {
             ListIterator<String> li = nickList.listIterator();
 
-            osPrinter(nameAndN[0] + " est aussi appelé : ");
+            osPrinter(nameAndN[1] + " est aussi appelé : ");
 
             while (li.hasNext()) {
                 osPrinter(li.next());
             }
 
         } else {
-            osPrinter(nameAndN[0] + " n'a pas de surnom ");
+            osPrinter(nameAndN[1] + " n'a pas de surnom ");
         }
 
     }

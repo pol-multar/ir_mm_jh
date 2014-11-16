@@ -20,30 +20,31 @@ public class DirectoryClient {
         is = null;
     }
 
-    public void launchClient(String nameHost,int nbPort){
+    public void launchClient(String nameHost, int nbPort) {
 
         try {
             echoSocket = new Socket(nameHost, nbPort);
-            os= new DataOutputStream(echoSocket.getOutputStream());
-            is= new DataInputStream(echoSocket.getInputStream());
-        }catch(UnknownHostException e){
-            System.err.println("Je ne connais pas : "+nameHost);
-        }catch (IOException e){
-            System.err.println("Ne peux pas I/O pour la connection : "+nameHost);
+            os = new DataOutputStream(echoSocket.getOutputStream());
+            is = new DataInputStream(echoSocket.getInputStream());
+        } catch (UnknownHostException e) {
+            System.err.println("Je ne connais pas : " + nameHost);
+        } catch (IOException e) {
+            System.err.println("Ne peux pas I/O pour la connection : " + nameHost);
         }
 
-        if(echoSocket!=null && os!=null && is !=null){
+        if (echoSocket != null && os != null && is != null) {
             try {
-                os.writeBytes("Coucou serveur\n");
-                os.writeBytes("J'attend ta réponse\n");
-                os.writeBytes("OK\n");
+                sendString("Coucou serveur");
+                sendString("J'attend ta réponse");
+                sendString("PRINTSNAME;toto");
+                sendString("OK");
 
                 //attente de la réponse du serveur
 
                 String responseLine;
-                while((responseLine=is.readLine())!=null){
-                    System.out.println("Serveur : "+responseLine);
-                    if(responseLine.indexOf("OK")!=-1){
+                while ((responseLine = is.readLine()) != null) {
+                    System.out.println("Serveur : " + responseLine);
+                    if (responseLine.indexOf("OK") != -1) {
                         System.out.println("J'ai reçu le OK du serveur");
                         break;
                     }
@@ -51,15 +52,21 @@ public class DirectoryClient {
                 os.close();
                 is.close();
                 echoSocket.close();
-            }
-            catch (UnknownHostException e){
-                System.err.println("Trying to connect to unknown host "+e);
+            } catch (UnknownHostException e) {
+                System.err.println("Trying to connect to unknown host " + e);
 
-            }
-            catch (IOException e){
-                System.err.println("IOException : "+e);
+            } catch (IOException e) {
+                System.err.println("IOException : " + e);
             }
 
+        }
+    }
+
+    private void sendString(String s) {
+        try {
+            os.writeBytes(s + "\n");
+        } catch (IOException e) {
+            System.err.println("IOException : " + e);
         }
     }
 }
