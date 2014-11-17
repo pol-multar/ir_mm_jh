@@ -50,8 +50,10 @@ public class DirectoryServer {
 
         try {
             clientSocket = annuaireServeurSocket.accept();
+            printInfo("Un client s'est connecté");
             is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             os = new PrintStream(clientSocket.getOutputStream());
+            osPrinter("Client connecté");
             while (interOut) {
                 line = is.readLine();
                 interOut = interpretor(line);
@@ -100,6 +102,8 @@ public class DirectoryServer {
      * Method in charge of adding a name and its nicknames in the directory
      * @param s the name to add
      */
+
+    //TODO renvoyer SURN? et ADOK
     private void addName(String s) {
         String name = s;
 
