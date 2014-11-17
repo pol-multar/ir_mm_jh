@@ -74,9 +74,9 @@ public class DirectoryServer {
         String[] s = line.split(";");
 
         switch (s[0]) {
-            case "OK":
-                printInfo("J'ai reçu un ok du client, Je ferme la connection");
-                os.println("OK");
+            case "EXIT":
+                printInfo("J'ai reçu un EXIT du client, Je ferme la connection");
+                os.println("EXITOK");
                 return false;
             case "AD":
                 printInfo("Le client veut ajouter le nom : " + s[1]);
