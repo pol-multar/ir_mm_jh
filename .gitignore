@@ -22,5 +22,8 @@ hs_err_pid*
 .settings/
 
 target/
+targetFalou/
 
 *.MF
+
+RenduNo1SeckDing.txt
