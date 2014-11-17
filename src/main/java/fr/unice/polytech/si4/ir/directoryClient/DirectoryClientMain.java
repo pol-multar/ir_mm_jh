@@ -9,7 +9,8 @@ public class DirectoryClientMain {
         DirectoryClient directoryClient = new DirectoryClient();
 
         System.out.println("Launching client");
-        directoryClient.launchClient("127.0.01",999);
+        //directoryClient.launchClient("127.0.0.1",9999);
+        directoryClient.launchClient("127.0.0.1",9999);
         System.out.println("Ending client");
     }
 }

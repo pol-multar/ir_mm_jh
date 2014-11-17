@@ -46,6 +46,7 @@ public class DirectoryServer {
         } catch (IOException e) {
             printErr("Impossible d'ouvrir le port, erreur : " + e.toString());
         }
+        System.out.println("IP : " + annuaireServeurSocket.getInetAddress() + ":" + annuaireServeurSocket.getLocalPort());
 
         try {
             clientSocket = annuaireServeurSocket.accept();
