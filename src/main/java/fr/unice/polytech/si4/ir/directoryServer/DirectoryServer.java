@@ -83,6 +83,7 @@ public class DirectoryServer {
                 return false;
             case "AD":
                 printInfo("Le client veut ajouter le nom : " + s[1]);
+                os.println("SURN?");
                 addName(s[1]);
                 return true;
             case "PRINTSNAME":
@@ -103,7 +104,6 @@ public class DirectoryServer {
      * @param s the name to add
      */
 
-    //TODO renvoyer SURN? et ADOK
     private void addName(String s) {
         String name = s;
 
@@ -112,10 +112,12 @@ public class DirectoryServer {
                 line=is.readLine();
                 if("END".equals(line)){
                     printInfo("Ajout terminé");
+                    os.println("ADOK");
                     break;
                 }
                 printInfo(name+" obtient un nouveau surnom : "+line);
                 directoryData.addEntry(name,line);
+                os.println("SURN?");
 
             }
 
