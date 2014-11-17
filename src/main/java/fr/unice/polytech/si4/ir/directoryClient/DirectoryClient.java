@@ -3,6 +3,7 @@ package fr.unice.polytech.si4.ir.directoryClient;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -25,13 +26,15 @@ public class DirectoryClient {
     public void launchClient(String nameHost, int nbPort) {
 
         try {
-            echoSocket = new Socket(nameHost, nbPort);
+            echoSocket = new Socket(InetAddress.getByName(nameHost), nbPort);
+
             os = new DataOutputStream(echoSocket.getOutputStream());
             is = new DataInputStream(echoSocket.getInputStream());
         } catch (UnknownHostException e) {
             printErr("Je ne connais pas : " + nameHost);
         } catch (IOException e) {
-            printErr("Ne peux pas I/O pour la connection : " + nameHost);
+            printErr("Ne peux pas I/O pour la connection : " + nameHost + e.getMessage());
+
         }
 
         if (echoSocket != null && os != null && is != null) {
