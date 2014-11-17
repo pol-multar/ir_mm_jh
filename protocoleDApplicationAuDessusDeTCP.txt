@@ -136,4 +136,5 @@ Nous allons implémenter les fonctionnalitées :
 +ajout d'un nouveau nom et de ses surnoms associés
 +Affichage des surnoms associés à un nom
 
-Questions :
+Après echanges:
+Corriger la méthode d'ajout qui ne correspond pas correctement au protocol

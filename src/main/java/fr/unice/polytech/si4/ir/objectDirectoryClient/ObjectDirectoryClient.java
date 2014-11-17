@@ -1,5 +1,7 @@
 package fr.unice.polytech.si4.ir.objectDirectoryClient;
 
+import rmi_object.Message;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -43,12 +45,12 @@ public class ObjectDirectoryClient {
                 askNickName("toto");
                 addNickName("toto\nriri\nfifi\nloulou");
                 askNickName("toto");
-                sendString("EXIT");
+                sendObject(new Message("EXIT"));
 
                 //attente de la réponse du serveur
 
                 String responseLine;
-                while ((responseLine = is.readLine()) != null) {
+                while ((responseLine = ((Message)is.readObject()).toString()) != null) {
                     printInfo("Client : Réponse du serveur : " + responseLine);
                     if (responseLine.indexOf("OK") != -1) {
                         printInfo("J'ai reçu le OK du serveur");
@@ -59,10 +61,11 @@ public class ObjectDirectoryClient {
                 is.close();
                 echoSocket.close();
             } catch (UnknownHostException e) {
-                printErr("Trying to connect to unknown host " + e);
-
+                printErr("Trying to connect to unknown host " + e.getMessage());
             } catch (IOException e) {
-                printErr("IOException : " + e);
+                printErr("IOException : " + e.getMessage());
+            } catch (ClassNotFoundException e) {
+                printErr("ClassNotFoundException : " + e.getMessage());
             }
 
         }
