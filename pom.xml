@@ -63,5 +63,13 @@
           <artifactId>junit-dep</artifactId>
           <version>4.11</version>
       </dependency>
+
+      <dependency>
+          <groupId>ding_falou</groupId>
+          <artifactId>ding_falou</artifactId>
+          <scope>system</scope>
+          <version>1.0</version>
+          <systemPath>${basedir}\src\lib\ding_falou.jar</systemPath>
+      </dependency>
   </dependencies>
 </project>
