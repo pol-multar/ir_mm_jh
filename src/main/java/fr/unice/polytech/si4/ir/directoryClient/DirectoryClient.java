@@ -31,7 +31,7 @@ public class DirectoryClient {
             os = new DataOutputStream(echoSocket.getOutputStream());
             is = new DataInputStream(echoSocket.getInputStream());
         } catch (UnknownHostException e) {
-            printErr("Je ne connais pas : " + nameHost+e.getMessage());
+            printErr("Je ne connais pas : " + nameHost + e.getMessage());
         } catch (IOException e) {
             printErr("Ne peux pas I/O pour la connection : " + nameHost + e.getMessage());
 

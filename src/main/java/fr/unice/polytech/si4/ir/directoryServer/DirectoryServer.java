@@ -61,6 +61,7 @@ public class DirectoryServer {
             os.close();
             is.close();
             clientSocket.close();
+            //TODO ne pas s'arreter ici pour etre pret a recevoir nouveau client
         } catch (IOException e) {
             System.out.println(e);
         }

@@ -20,7 +20,7 @@ Le numéro de port utilisé est le 9999
 
 La sérialisation en oeuvre est la sérialisation chaîne.
 
-Déroulement de la déconnexion au serveur :
+Déroulement de la déconnexion au serveur (a mettre dans les fonctionnalités) :
 
    	  Client:      Serveur
 	+-----------+-------------------+
@@ -151,4 +151,7 @@ Nous allons implémenter les fonctionnalitées :
 +Affichage des surnoms associés à un nom
 
 Après echanges:
-Corriger la méthode d'ajout qui ne correspond pas correctement au protocole
+Corriger la méthode d'ajout qui ne correspond pas correctement au protocole -> OK
+
+Après deuxième rdv:
+simplifier ad + deconnexion
