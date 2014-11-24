@@ -69,7 +69,7 @@
           <artifactId>ding_falou</artifactId>
           <scope>system</scope>
           <version>1.0</version>
-          <systemPath>${basedir}\src\lib\ding_falou.jar</systemPath>
+          <systemPath>${basedir}/src/lib/ding_falou.jar</systemPath>
       </dependency>
   </dependencies>
 </project>
