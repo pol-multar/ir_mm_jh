@@ -31,7 +31,7 @@ public class DirectoryClient {
             os = new DataOutputStream(echoSocket.getOutputStream());
             is = new DataInputStream(echoSocket.getInputStream());
         } catch (UnknownHostException e) {
-            printErr("Je ne connais pas : " + nameHost);
+            printErr("Je ne connais pas : " + nameHost+e.getMessage());
         } catch (IOException e) {
             printErr("Ne peux pas I/O pour la connection : " + nameHost + e.getMessage());
 
@@ -50,13 +50,11 @@ public class DirectoryClient {
 
                 String responseLine;
                 while ((responseLine = is.readLine()) != null) {
-                    if (responseLine.indexOf("OK") != -1) {
-                        printInfo("J'ai reçu le OK du serveur");
+                    printInfo("Client : Réponse du serveur : " + responseLine);
+                    if ("EXITOK".equals(responseLine)) {
+                        printInfo("Le serveur termine la connexion");
                         break;
                     }
-
-                    printInfo("Client : Réponse du serveur : " + responseLine);
-
                 }
                 os.close();
                 is.close();

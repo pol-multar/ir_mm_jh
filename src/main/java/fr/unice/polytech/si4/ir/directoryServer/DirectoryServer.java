@@ -53,7 +53,7 @@ public class DirectoryServer {
             printInfo("Un client s'est connecté");
             is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             os = new PrintStream(clientSocket.getOutputStream());
-            osPrinter("Client connecté");
+            //osPrinter("Client connecté");
             while (interOut) {
                 line = is.readLine();
                 interOut = interpretor(line);
@@ -83,7 +83,6 @@ public class DirectoryServer {
                 return false;
             case "AD":
                 printInfo("Le client veut ajouter le nom : " + s[1]);
-                os.println("SURN");
                 addName(s[1]);
                 return true;
             case "PRINTSNAME":
@@ -92,7 +91,7 @@ public class DirectoryServer {
                 return true;
             default:
                 printErr("Instruction non reconnue : " + s[0]);
-                os.println(line);
+                os.println("UNKNOW");
                 return true;
         }
 
@@ -143,7 +142,7 @@ public class DirectoryServer {
         if (nickList.size() != 0) {
             ListIterator<String> li = nickList.listIterator();
 
-            osPrinter(name + " est aussi appelé : ");
+            //osPrinter(name + " est aussi appelé : ");
             printInfo(name + " est aussi appelé : ");
 
             while (li.hasNext()) {
@@ -154,7 +153,7 @@ public class DirectoryServer {
 
 
         } else {
-            osPrinter(name + " n'a pas de surnom ");
+            osPrinter("NOSNAME");
             printInfo(name + " n'a pas de surnom ");
         }
 

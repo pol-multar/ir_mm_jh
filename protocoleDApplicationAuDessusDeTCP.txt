@@ -27,6 +27,13 @@ Déroulement de la déconnexion au serveur :
 	|“EXIT\n”	"EXITOK\n"    		|
     +-----------+-------------------+
 
+Si le serveur ne connait pas la commande:
+
+   	  Client:      Serveur
+	+----------------------+-------------------+
+	|“commande inconnue\n”	"UNKNOW\n"    	   |
+    +----------------------+-------------------+
+
 ***************************************************************************************************************************************************
 ***************************************************************************************************************************************************
 
@@ -84,6 +91,13 @@ Affichage des surnoms associés à un nom:
 	|"PRINTSNAME;nom\n					"Surnom1;Surnom2;...;SurnomN\n"    |
 	+---------------------------------+------------------------------------+
 
+Si il n'y a pas de surnom:
+
+   	  Client:					Serveur
+	+---------------------------------+----------------+
+	|"PRINTSNAME;nom\n					"NOSNAME\n"    |
+	+---------------------------------+----------------+
+
 ***************************************************************************************************************************************************
 
 Modification d’un nom:
@@ -137,4 +151,4 @@ Nous allons implémenter les fonctionnalitées :
 +Affichage des surnoms associés à un nom
 
 Après echanges:
-Corriger la méthode d'ajout qui ne correspond pas correctement au protocol
+Corriger la méthode d'ajout qui ne correspond pas correctement au protocole
