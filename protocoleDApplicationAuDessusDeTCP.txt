@@ -45,7 +45,7 @@ Ajout d’un nom et d’un (ou plusieurs) surnom associé :
 
    	  Client:      Serveur
 	+-----------+---------------+
-	|“AD;Nom\n”		"SURN\n"   |
+	|“AD:Nom;Surnom2;Surnom3;...;Surn\n”		"SURN\n"   |
 	|“Surnom1\n”	"SURN\n"  		|
 	|“Surnom2\n”	"SURN\n"  		|
 	|  [...]	"SURN\n"  		|

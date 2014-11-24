@@ -44,7 +44,7 @@ public class DirectoryClient {
                 askNickName("toto");
                 addNickName("toto\nriri\nfifi\nloulou\nEND");
                 askNickName("toto");
-                sendString("EXIT");
+                //sendString("EXIT");
 
                 //attente de la réponse du serveur
 
