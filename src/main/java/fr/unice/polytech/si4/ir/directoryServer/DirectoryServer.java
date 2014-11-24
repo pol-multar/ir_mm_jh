@@ -14,7 +14,7 @@ public class DirectoryServer {
     private Socket clientSocket;
     private String line;
     private BufferedReader is;
-    private PrintStream os;
+    private PrintWriter os;
     private Boolean interOut;
     private DirectoryData directoryData;
     private Boolean verbose;
@@ -52,7 +52,7 @@ public class DirectoryServer {
             clientSocket = annuaireServeurSocket.accept();
             printInfo("Un client s'est connecté");
             is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            os = new PrintStream(clientSocket.getOutputStream());
+            os = new PrintWriter(clientSocket.getOutputStream(),true);
             //osPrinter("Client connecté");
             while (interOut) {
                 line = is.readLine();

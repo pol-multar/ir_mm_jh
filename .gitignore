@@ -27,3 +27,4 @@ targetFalou/
 *.MF
 
 RenduNo1SeckDing.txt
+!src/lib/ding_falou.jar
