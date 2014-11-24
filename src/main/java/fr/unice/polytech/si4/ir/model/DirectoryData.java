@@ -10,6 +10,7 @@ import java.util.Hashtable;
 public class DirectoryData {
 
     private Hashtable<String,String> directory;//<surnom,nom>
+    private boolean verbose=false;
 
     /**
      * Public constructor of the directory
@@ -27,6 +28,7 @@ public class DirectoryData {
      */
     public Boolean addEntry(String name, String nickname){
         if(!directory.containsKey(nickname)){
+            printInf("DirectoryData : addEntry : nickname : " + nickname + " name " + name);
             directory.put(nickname,name);
             return true;
         }else{
@@ -61,17 +63,24 @@ public class DirectoryData {
 
         while(e.hasMoreElements()){
             key=(String)e.nextElement();
-            //System.out.println("J'ai trouvé la clé : "+key);
+            printInf("DirectoryData : getNick : J'ai trouvé la clé : " + key);
             assocName=(String) directory.get(key);
-            //System.out.println("Elle est associée à :"+assocName);
+            printInf("DirectoryData : getNick : Elle est associée à :" + assocName);
 
             if(assocName.equals(name)){
-                //System.out.println("J'ajoute la clé trouvée :"+key);
+                printInf("DirectoryData : getNick : J'ajoute la clé trouvée :" + key);
                al.add(key);
             }
         }
 
+        printInf("DirectoryData : getNick : J'ai fini l'al, je la retourne");
         return al;
+    }
+
+    private void printInf(String s){
+        if(this.verbose){
+            System.out.println(s);
+        }
     }
 
 }

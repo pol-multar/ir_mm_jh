@@ -83,7 +83,7 @@ public class DirectoryServer {
                 return false;
             case "AD":
                 printInfo("Le client veut ajouter le nom : " + s[1]);
-                os.println("SURN?");
+                os.println("SURN");
                 addName(s[1]);
                 return true;
             case "PRINTSNAME":
@@ -114,10 +114,11 @@ public class DirectoryServer {
                     printInfo("Ajout terminé");
                     os.println("ADOK");
                     break;
+                }else {
+                    printInfo(name + " obtient un nouveau surnom : " + line);
+                    directoryData.addEntry(name, line);
+                    os.println("SURN");
                 }
-                printInfo(name+" obtient un nouveau surnom : "+line);
-                directoryData.addEntry(name,line);
-                os.println("SURN?");
 
             }
 
@@ -136,20 +137,25 @@ public class DirectoryServer {
     private void printsname(String name) {
 
         ArrayList<String> nickList;
+        String s="";
 
         nickList = this.directoryData.getNick(name);
         if (nickList.size() != 0) {
             ListIterator<String> li = nickList.listIterator();
 
             osPrinter(name + " est aussi appelé : ");
+            printInfo(name + " est aussi appelé : ");
 
             while (li.hasNext()) {
-                osPrinter(li.next());
+                s+=li.next()+" ";
             }
+            osPrinter(s);
+            printInfo(s);
 
 
         } else {
             osPrinter(name + " n'a pas de surnom ");
+            printInfo(name + " n'a pas de surnom ");
         }
 
     }

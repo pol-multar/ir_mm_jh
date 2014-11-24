@@ -50,11 +50,13 @@ public class DirectoryClient {
 
                 String responseLine;
                 while ((responseLine = is.readLine()) != null) {
-                    printInfo("Client : Réponse du serveur : " + responseLine);
                     if (responseLine.indexOf("OK") != -1) {
                         printInfo("J'ai reçu le OK du serveur");
                         break;
                     }
+
+                    printInfo("Client : Réponse du serveur : " + responseLine);
+
                 }
                 os.close();
                 is.close();
