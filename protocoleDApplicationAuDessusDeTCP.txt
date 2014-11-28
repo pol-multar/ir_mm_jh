@@ -20,11 +20,11 @@ Le numéro de port utilisé est le 9999
 
 La sérialisation en oeuvre est la sérialisation chaîne.
 
-Déroulement de la déconnexion au serveur (a mettre dans les fonctionnalités) :
+Déroulement de la déconnexion au serveur :
 
    	  Client:      Serveur
 	+-----------+-------------------+
-	|“EXIT\n”	"EXITOK\n"    		|
+	|“ENDCO\n”	  "ENDCOK\n"    	|
     +-----------+-------------------+
 
 Si le serveur ne connait pas la commande:
@@ -43,42 +43,32 @@ Ajout d’un nom et d’un (ou plusieurs) surnom associé :
 
 +Si le serveur ne possede pas deja le nom :
 
-   	  Client:      Serveur
-	+-----------+---------------+
-	|“AD:Nom;Surnom2;Surnom3;...;Surn\n”		"SURN\n"   |
-	|“Surnom1\n”	"SURN\n"  		|
-	|“Surnom2\n”	"SURN\n"  		|
-	|  [...]	"SURN\n"  		|
-	|”SurnomN\n”	”SURN\n”  		|
-	|”END\n”		"ADOK\n"   		|
-    +-----------+---------------+
+   	  		Client:      					Serveur
+	+------------------------------------+---------------+
+	|“AD:Nom;Surnom2;Surnom3;...;Surn\n”		"ADOK\n"     |
+    +------------------------------------+---------------+
 
 +Si le serveur possede deja le nom :
 
    	  Client:      Serveur
 	+-----------+---------------+
-	|“AD;Nom\n”		"ALRDYEX\n" |
+	|“AD:Nom\n”		"ALRDYEX\n" |
 	+-----------+---------------+
 
 ***************************************************************************************************************************************************
 Ajout d'un surnom à un nom déjà existant
 
-   	  Client:      Serveur
-	+-----------+---------------+
-	|“ADS;Nom\n”		"SURN?\n"   |
-    |“Surnom1\n”	"SURN?\n"  		|
-    |“Surnom2\n”	"SURN?\n"  		|
-    |  [...]	"SURN?\n"  		|
-    |”SurnomN\n”	”SURN?\n”  		|
-    |”END\n”		"ADSOK\n"   	|
-    +-----------+---------------+
+   	  		Client:      					Serveur
+	+------------------------------------+---------------+
+	|“ADS:Nom;Surnom2;Surnom3;...;Surn\n”	"ADSOK\n"    |
+    +------------------------------------+---------------+
 
 ***************************************************************************************************************************************************
 Affichage d’un nom associé a un surnom:
 
    	  Client:					Serveur
 	+----------------------------------+---------------+
-	|"PRINTNAME;Surnom\n					"Nom\n"    |
+	|"PRINTNAME:Surnom\n					"Nom\n"    |
 	+----------------------------------+---------------+
 
 ***************************************************************************************************************************************************
@@ -88,14 +78,14 @@ Affichage des surnoms associés à un nom:
 
    	  Client:					Serveur
 	+---------------------------------+------------------------------------+
-	|"PRINTSNAME;nom\n					"Surnom1;Surnom2;...;SurnomN\n"    |
+	|"PRINTSNAME:nom\n					"Surnom1;Surnom2;...;SurnomN\n"    |
 	+---------------------------------+------------------------------------+
 
 Si il n'y a pas de surnom:
 
    	  Client:					Serveur
 	+---------------------------------+----------------+
-	|"PRINTSNAME;nom\n					"NOSNAME\n"    |
+	|"PRINTSNAME:nom\n					"NOSNAME\n"    |
 	+---------------------------------+----------------+
 
 ***************************************************************************************************************************************************
@@ -105,7 +95,7 @@ Modification d’un nom:
 
    	  Client:					Serveur
 	+----------------------------------+----------------+
-	|"EDITNAME;nom\n					"NNAME?\n"  	|
+	|"EDITNAME:nom\n					"NNAME?\n"  	|
 	|“Nouveau nom\n”						"MODNOK\n"		|
 	+----------------------------------+----------------+
 
@@ -115,7 +105,7 @@ Modification d’un surnom associe a un nom
 
    	  Client:					Serveur
 	+-------------------------------+-----------------+
-	|"EDITSNAME;Nom\n				  "OSNAME?\n"     |
+	|"EDITSNAME:Nom\n				  "OSNAME?\n"     |
 	|“Ancien surnom\n”				  "NSNAME?\n"     |
 	|“Nouveau surnom\n”				  "MODSOK\n" 	  |
 	+-------------------------------+-----------------+
@@ -127,7 +117,7 @@ Suppression d’un nom
 
    	  Client:					Serveur
 	+----------------------------+-----------------+
-	|"DELNAME;Nom\n					"DELNOK\n"     |
+	|"DELNAME:Nom\n					"DELNOK\n"     |
 	+----------------------------+-----------------+
 
 ***************************************************************************************************************************************************
@@ -136,7 +126,7 @@ Suppression d’un ou plusieurs surnom(envoyer nombre a supprimer ?)
 
    	  Client:					Serveur
 	+--------------------------------+-----------------+
-	|"DELSNAME;Nom\n					"SNAME?\n"     |
+	|"DELSNAME:Nom\n					"SNAME?\n"     |
 	|“Surnom a suppr1\n”					"SNAME?\n"    |
 	|“Surnom a suppr2\n”					"SNAME?\n"    |
 	|[...]								"SNAME?\n"    |
@@ -154,4 +144,4 @@ Après echanges:
 Corriger la méthode d'ajout qui ne correspond pas correctement au protocole -> OK
 
 Après deuxième rdv:
-simplifier ad + deconnexion
+deconnexion

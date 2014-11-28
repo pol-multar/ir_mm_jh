@@ -20,6 +20,14 @@ public class DirectoryData {
         directory =new Hashtable<>();
     }
 
+    public Boolean containName(String name){
+        if(directory.contains(name)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     /**
      * The method to add a name and its nicknames to the directory
      * @param name the name to add

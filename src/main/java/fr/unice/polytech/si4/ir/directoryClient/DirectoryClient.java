@@ -1,8 +1,6 @@
 package fr.unice.polytech.si4.ir.directoryClient;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -11,86 +9,88 @@ import java.net.UnknownHostException;
  * Created by Max on 10/11/2014.
  */
 public class DirectoryClient {
-    private Socket echoSocket;
-    private DataOutputStream os;
-    private DataInputStream is;
+    private Socket directorySocket;
+    private PrintWriter os;
+    private BufferedReader is;
+    private BufferedReader stdIn;
     private Boolean verbose;
 
     public DirectoryClient() {
-        echoSocket = null;
+        directorySocket = null;
         os = null;
         is = null;
+        stdIn = null;
         verbose = true;
     }
 
-    public void launchClient(String nameHost, int nbPort) {
+    public void launchClient(String hostName, int portNumber) {
 
         try {
-            echoSocket = new Socket(InetAddress.getByName(nameHost), nbPort);
-
-            os = new DataOutputStream(echoSocket.getOutputStream());
-            is = new DataInputStream(echoSocket.getInputStream());
+            directorySocket = new Socket(InetAddress.getByName(hostName), portNumber);
+            os = new PrintWriter(directorySocket.getOutputStream(), true);
+            is = new BufferedReader(new InputStreamReader(directorySocket.getInputStream()));
+            stdIn = new BufferedReader(new InputStreamReader(System.in));
         } catch (UnknownHostException e) {
-            printErr("Je ne connais pas : " + nameHost + e.getMessage());
+            printErr("Je ne connais pas : " + hostName);
+            System.exit(1);
         } catch (IOException e) {
-            printErr("Ne peux pas I/O pour la connection : " + nameHost + e.getMessage());
+            printErr("Ne peux pas I/O pour la connection vers : " + hostName);
+            System.exit(1);
 
         }
 
-        if (echoSocket != null && os != null && is != null) {
+        if (directorySocket != null && os != null && is != null && stdIn != null) {
             try {
                 sendString("Coucou serveur");
                 sendString("J'attend ta réponse");
                 askNickName("toto");
-                addNickName("toto\nriri\nfifi\nloulou\nEND");
+                addNickName("toto;riri;fifi;loulou");
                 askNickName("toto");
-                //sendString("EXIT");
+                sendString("ENDCO");
 
                 //attente de la réponse du serveur
 
-                String responseLine;
-                while ((responseLine = is.readLine()) != null) {
-                    printInfo("Client : Réponse du serveur : " + responseLine);
-                    if ("EXITOK".equals(responseLine)) {
-                        printInfo("Le serveur termine la connexion");
+                String lineInput;
+                while ((lineInput = is.readLine()) != null) {
+                    printInfo("Client : Réponse du serveur : " + lineInput);
+                    if ("EXITOK".equals(lineInput)) {
+                        printInfo("Le serveur termine la connexion, deconnexion");
+                        break;
+                    }
+                    if("ENDCOK".equals(lineInput)){
+                        printInfo("Le serveur accepte notre deconnexion");
                         break;
                     }
                 }
                 os.close();
                 is.close();
-                echoSocket.close();
+                directorySocket.close();
             } catch (UnknownHostException e) {
-                printErr("Trying to connect to unknown host " + e);
+                printErr("Trying to connect to unknown host " + hostName);
 
             } catch (IOException e) {
-                printErr("IOException : " + e);
+                printErr("Couldn't get I/O for the connection to " + hostName);
             }
 
         }
     }
 
     private void askNickName(String s) {
-        sendString("PRINTSNAME;" + s);
+        sendString("PRINTSNAME:" + s);
     }
 
     private void addNickName(String s) {
-        sendString("AD;" + s);
+        sendString("AD:" + s);
     }
 
     private void sendString(String s) {
-        try {
-            os.writeBytes(s + "\n");
-        } catch (IOException e) {
-            System.err.println("IOException : " + e);
-        }
+        os.println(s);
     }
 
     private void printInfo(String s) {
-
         if (verbose) {
             System.out.println(s);
         }
-
     }
 
     private void printErr(String s) {

@@ -12,7 +12,7 @@ public class DirectoryServer {
 
     private ServerSocket annuaireServeurSocket;
     private Socket clientSocket;
-    private String line;
+    private String inputLine;
     private BufferedReader is;
     private PrintWriter os;
     private Boolean interOut;
@@ -25,12 +25,12 @@ public class DirectoryServer {
     public DirectoryServer() {
         annuaireServeurSocket = null;
         clientSocket = null;
-        line = null;
+        inputLine = null;
         is = null;
         os = null;
         interOut = true;
         directoryData = new DirectoryData();
-        verbose=true;
+        verbose = true;
     }
 
     /**
@@ -46,24 +46,23 @@ public class DirectoryServer {
         } catch (IOException e) {
             printErr("Impossible d'ouvrir le port, erreur : " + e.toString());
         }
-        System.out.println("IP : " + annuaireServeurSocket.getInetAddress() + " : " + annuaireServeurSocket.getLocalPort());
+        printInfo("IP : " + annuaireServeurSocket.getInetAddress() + " : " + annuaireServeurSocket.getLocalPort());
 
-        try {
-            clientSocket = annuaireServeurSocket.accept();
-            printInfo("Un client s'est connecté");
-            is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            os = new PrintWriter(clientSocket.getOutputStream(),true);
-            //osPrinter("Client connecté");
-            while (interOut) {
-                line = is.readLine();
-                interOut = interpretor(line);
+        while(interOut) {
+            try {
+                clientSocket = annuaireServeurSocket.accept();
+                printInfo("Un client s'est connecté");
+                is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                os = new PrintWriter(clientSocket.getOutputStream(), true);
+                while((inputLine=is.readLine())!=null) {
+                    interOut = interpretor(inputLine);
+                }
+                os.close();
+                is.close();
+                clientSocket.close();
+            } catch (IOException e) {
+                System.out.println(e);
             }
-            os.close();
-            is.close();
-            clientSocket.close();
-            //TODO ne pas s'arreter ici pour etre pret a recevoir nouveau client
-        } catch (IOException e) {
-            System.out.println(e);
         }
     }
 
@@ -75,7 +74,7 @@ public class DirectoryServer {
      */
     private boolean interpretor(String line) {
 
-        String[] s = line.split(";");
+        String[] s = line.split(":");
 
         switch (s[0]) {
             case "EXIT":
@@ -83,12 +82,16 @@ public class DirectoryServer {
                 os.println("EXITOK");
                 return false;
             case "AD":
-                printInfo("Le client veut ajouter le nom : " + s[1]);
+                printInfo("Le client veut ajouter le nom et les surnoms : " + s[1]);
                 addName(s[1]);
                 return true;
             case "PRINTSNAME":
                 printInfo("Le client veut afficher les surnoms associés à : " + s[1]);
                 printsname(s[1]);
+                return true;
+            case "ENDCO":
+                printInfo("Le client a termine");
+                endco();
                 return true;
             default:
                 printErr("Instruction non reconnue : " + s[0]);
@@ -99,32 +102,37 @@ public class DirectoryServer {
 
     }
 
+    private void endco() {
+        osPrinter("ENDCOK");
+    }
+
     /**
      * Method in charge of adding a name and its nicknames in the directory
+     *
      * @param s the name to add
      */
 
     private void addName(String s) {
-        String name = s;
+        //printInfo("Entree dans la methode addName");
+        String[] infos = s.split(";");
+        String name = infos[0];
 
-        try {
-            while(true){
-                line=is.readLine();
-                if("END".equals(line)){
-                    printInfo("Ajout terminé");
-                    os.println("ADOK");
-                    break;
-                }else {
-                    printInfo(name + " obtient un nouveau surnom : " + line);
-                    directoryData.addEntry(name, line);
-                    os.println("SURN");
+        if(!directoryData.containName(name)) {
+
+            for (int i = 1; i < infos.length; i++) {
+                if (directoryData.addEntry(name, infos[i])) {
+                    printInfo(name + " obtient un nouveau surnom : " + infos[i]);
+                } else {
+                    printInfo(infos[i] + " est déjà pris");
                 }
-
             }
-
-        } catch (IOException e) {
-            printErr(e.toString());
+            osPrinter("ADOK");
+        }else{
+            printInfo("Le nom existe deja dans l'annuaire");
+            osPrinter("ALRDYEX");
         }
+        //printInfo("Fin de la méthode addName");
+
 
 
     }
@@ -137,7 +145,7 @@ public class DirectoryServer {
     private void printsname(String name) {
 
         ArrayList<String> nickList;
-        String s="";
+        String s = "";
 
         nickList = this.directoryData.getNick(name);
         if (nickList.size() != 0) {
@@ -147,7 +155,7 @@ public class DirectoryServer {
             printInfo(name + " est aussi appelé : ");
 
             while (li.hasNext()) {
-                s+=li.next()+" ";
+                s += li.next() + " ";
             }
             osPrinter(s);
             printInfo(s);
@@ -171,12 +179,13 @@ public class DirectoryServer {
 
     /**
      * Method in charge of displaying messages
+     *
      * @param s
      */
     private void printInfo(String s) {
 
         if (verbose) {
-            System.out.println("Server : "+s);
+            System.out.println("Server : " + s);
         }
 
     }
@@ -187,7 +196,7 @@ public class DirectoryServer {
      * @param s string to display with the error
      */
     private void printErr(String s) {
-        System.err.println("Server : "+s);
+        System.err.println("Server : " + s);
     }
 
 }
