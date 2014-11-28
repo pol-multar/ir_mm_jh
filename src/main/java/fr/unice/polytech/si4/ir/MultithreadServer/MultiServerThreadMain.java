@@ -20,8 +20,8 @@ public class MultiServerThreadMain {
     		}
     		while (listening){
     			System.out.println("IP : " + serverSocket.getInetAddress() + " : " + serverSocket.getLocalPort());
-    			new MutiServerThread(serverSocket.accept()).run();
-    			serverSocket.close();
+    			new MultiServerThread(serverSocket.accept()).start();
+    			//serverSocket.close();
     		}
         }else{
             System.out.println("Port spécifié, lancement sur le port indiqué : "+args[0]);
@@ -35,8 +35,8 @@ public class MultiServerThreadMain {
     		}
             while (listening){
             	System.out.println("IP : " + serverSocket.getInetAddress() + " : " + serverSocket.getLocalPort());
-    			new MutiServerThread(serverSocket.accept()).run();
-    			serverSocket.close();
+    			new MultiServerThread(serverSocket.accept()).start();
+    			//serverSocket.close();
     		}
         }
 		System.out.println("Serveur : J'ai fini de travailler");
