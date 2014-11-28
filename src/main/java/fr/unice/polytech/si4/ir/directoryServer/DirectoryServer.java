@@ -155,7 +155,7 @@ public class DirectoryServer {
             printInfo(name + " est aussi appelé : ");
 
             while (li.hasNext()) {
-                s += li.next() + " ";
+                s += li.next() + ";";
             }
             osPrinter(s);
             printInfo(s);

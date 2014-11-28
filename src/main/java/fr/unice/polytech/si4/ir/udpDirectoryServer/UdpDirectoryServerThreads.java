@@ -18,6 +18,7 @@ public class UdpDirectoryServerThreads extends Thread {
     protected DatagramSocket socket;
     protected BufferedReader in;
     private DirectoryData directoryData;
+    private static final int bufLength=2048;
 
     private Boolean verbose;
 
@@ -37,7 +38,7 @@ public class UdpDirectoryServerThreads extends Thread {
         String serverResponse=null;
         while (interOut) {
             try {
-                byte[] buf = new byte[1024];
+                byte[] buf = new byte[bufLength];
 
                 // receive request
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -45,7 +46,7 @@ public class UdpDirectoryServerThreads extends Thread {
                 printInfo("Un packet a été reçu");
 
                 //figure out response
-                serverResponse = interpretor(buf);
+                serverResponse = interpreter(packet);
                 if("EXITOK".equals(serverResponse)){
                     interOut=false;
                 }
@@ -68,11 +69,11 @@ public class UdpDirectoryServerThreads extends Thread {
     /**
      * Method who execute action according to the client request
      *
-     * @param buf a byte array containing the client request
+     * @param aPacket the client packet
      * @return response of the server
      */
-    private String interpretor(byte[] buf) {
-        String line = new String(buf);
+    private String interpreter(DatagramPacket aPacket) {
+        String line = new String(aPacket.getData(),0,aPacket.getLength());
         String[] s = line.split(":");
 
         switch (s[0]) {
@@ -140,7 +141,7 @@ public class UdpDirectoryServerThreads extends Thread {
             printInfo(name + " est aussi appelé : ");
 
             while (li.hasNext()) {
-                s += li.next() + " ";
+                s += li.next() + ";";
             }
 
             printInfo(s);
