@@ -13,7 +13,7 @@ public class UdpDirectoryClient {
     private DatagramSocket socket;
     private int port;
     private byte[] buf;
-    private static final int bufLength=2048;
+    private static final int bufLength=1024;
 
     public UdpDirectoryClient(String hostname, int port) {
         serverAddress = null;
@@ -60,6 +60,8 @@ public class UdpDirectoryClient {
             packet = new DatagramPacket(buf, buf.length, serverAddress, port);
             socket.send(packet);
 
+            Thread.sleep(3000);
+
             //3. Get response
             packet = new DatagramPacket(buf, buf.length);
             socket.receive(packet);
@@ -68,7 +70,11 @@ public class UdpDirectoryClient {
             String receive = new String(packet.getData(), 0, packet.getLength());
             printInfo(receive);
 
+            Thread.sleep(3000);
+
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

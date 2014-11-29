@@ -18,7 +18,11 @@ public class UdpDirectoryServerThreads extends Thread {
     protected DatagramSocket socket;
     protected BufferedReader in;
     private DirectoryData directoryData;
-    private static final int bufLength=2048;
+    private static final int bufLength = 1024;
+    private InetAddress clientAddress;
+    private int clientPort;
+    private byte[] receiveData;
+    private byte[] sendData;
 
     private Boolean verbose;
 
@@ -29,34 +33,36 @@ public class UdpDirectoryServerThreads extends Thread {
         in = null;
         directoryData = new DirectoryData();
         verbose = true;
+        clientAddress = null;
+        clientPort = 0;
+        receiveData = new byte[bufLength];
+        sendData = new byte[bufLength];
         printInfo("Lancement du serveur de l'annuaire");
     }
 
     public void run() {
 
-        boolean interOut=true;
-        String serverResponse=null;
+        boolean interOut = true;
+        String serverResponse = null;
         while (interOut) {
             try {
-                byte[] buf = new byte[bufLength];
 
                 // receive request
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
-                socket.receive(packet);
-                printInfo("Un packet a été reçu");
-
+                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                socket.receive(receivePacket);
+                printInfo("Un receivePacket a été reçu");
+                clientAddress = receivePacket.getAddress();
+                clientPort = receivePacket.getPort();
                 //figure out response
-                serverResponse = interpreter(packet);
-                if("EXITOK".equals(serverResponse)){
-                    interOut=false;
+                serverResponse = interpreter(receivePacket);
+                if ("EXITOK".equals(serverResponse)) {
+                    interOut = false;
                 }
-                buf=serverResponse.getBytes();
+                sendData = serverResponse.getBytes();
 
                 // send the response to the client at "address" and "port"
-                InetAddress address=packet.getAddress();
-                int port=packet.getPort();
-                packet= new DatagramPacket(buf,buf.length, address,port);
-                socket.send(packet);
+                DatagramPacket sendPacket = new DatagramPacket(sendData,sendData.length, clientAddress, clientPort);
+                socket.send(sendPacket);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -73,7 +79,7 @@ public class UdpDirectoryServerThreads extends Thread {
      * @return response of the server
      */
     private String interpreter(DatagramPacket aPacket) {
-        String line = new String(aPacket.getData(),0,aPacket.getLength());
+        String line = new String(aPacket.getData(), 0, aPacket.getLength());
         String[] s = line.split(":");
 
         switch (s[0]) {
